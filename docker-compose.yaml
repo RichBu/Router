@@ -1,0 +1,22 @@
+version: "3.7"
+networks:
+  main:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+      driver: default
+services:
+  router:
+    container_name: router
+    build: 
+      context: .
+      dockerfile: Dockerfile-router
+    image: richbu/img-router
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      main:
+        ipv4_address: 172.20.0.13   
+    ports:
+      - "80:80"
